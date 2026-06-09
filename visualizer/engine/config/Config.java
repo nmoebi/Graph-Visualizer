@@ -10,6 +10,8 @@ public final class Config {
         this.height = height;
     }
 
+    
+
     public int getWidth() {
         return width;
     }

@@ -39,6 +39,7 @@ public class MoveVertexHandler implements InteractionHandler {
             x = (int) (Math.round((double) x / gridSize) * gridSize);
             y = (int) (Math.round((double) y / gridSize) * gridSize);
             vertex.setPosition(x, y);
+
             vertexGrabbed = false;
         }
     }

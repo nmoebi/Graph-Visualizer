@@ -1,4 +1,4 @@
-package visualizer.core;
+package visualizer.core.logic;
 
 import visualizer.engine.states.EngineState;
 import visualizer.engine.states.StateManager;

@@ -1,4 +1,4 @@
-package visualizer.core;
+package visualizer.core.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

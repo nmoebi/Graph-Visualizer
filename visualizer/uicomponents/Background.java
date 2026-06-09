@@ -1,8 +1,8 @@
 package visualizer.uicomponents;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
+import visualizer.engine.config.Colors;
 import visualizer.engine.config.Config;
 import visualizer.engine.render.RenderLayer;
 import visualizer.engine.render.Renderable;
@@ -23,7 +23,7 @@ public class Background implements Renderable {
         int maxSizeValue = Math.max(width, height);
         int gridSize = config.getGridSize();
 
-        graphics.setColor(Color.lightGray);
+        graphics.setColor(Colors.GRAY);
         graphics.setStroke(new BasicStroke(1));
 
         for (int i = gridSize; i <= maxSizeValue; i+=gridSize) {

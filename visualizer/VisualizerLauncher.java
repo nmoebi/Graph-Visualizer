@@ -1,7 +1,13 @@
-package visualizer.core;
+package visualizer;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
+import visualizer.core.logic.VisualizerEngine;
+import visualizer.core.logic.VisualizerInputManager;
+import visualizer.core.logic.VisualizerRenderManager;
+import visualizer.core.logic.VisualizerStateManager;
+import visualizer.core.swing.ControlPanel;
+import visualizer.core.swing.VisualizerPanel;
 import visualizer.engine.VisEngine;
 import visualizer.engine.config.Config;
 
@@ -27,5 +33,6 @@ public class VisualizerLauncher {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setResizable(false);
     }
 }

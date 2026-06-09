@@ -1,6 +1,5 @@
-package visualizer.core;
+package visualizer.core.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -10,15 +9,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import visualizer.engine.VisEngine;
+import visualizer.engine.config.Colors;
 import visualizer.engine.config.Config;
 import visualizer.engine.states.EngineState;
 
-public class ControlPanel extends JPanel implements ActionListener {
+public class ControlPanel extends JPanel implements ActionListener, Colors {
 
     private final VisEngine engine;
-    private final Color activeColor = Color.green;
-    private final Color defaultColor = Color.lightGray;
-    private final Color backgroundColor = Color.white;
 
     private JButton addVerticesButton;
     private JButton addEdgesButton;
@@ -31,8 +28,8 @@ public class ControlPanel extends JPanel implements ActionListener {
         this.engine = engine;
 
         setLayout(new FlowLayout(FlowLayout.CENTER, 12, 12));
-        setBackground(backgroundColor);
-        setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.lightGray));
+        setBackground(Colors.WHITE);
+        setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Colors.GRAY));
 
         addComponents();
     }
@@ -41,19 +38,19 @@ public class ControlPanel extends JPanel implements ActionListener {
         addVerticesButton();
         addEdgesButton();
         moveVertexButton();
-        resetButton();        
+        resetButton(); 
+        setBackgrounds(addVerticesButton);       
     }
 
     private void setBackgrounds(Component activeComponent) {
         for(Component component : this.getComponents()) {
-            component.setBackground(defaultColor);
+            component.setBackground(Colors.INACTIVE_COLOR);
         }
-        activeComponent.setBackground(activeColor);
+        activeComponent.setBackground(Colors.ACTIVE_COLOR);
     }
 
         private void addVerticesButton() {
         addVerticesButton = new JButton("Add Vertices");
-        addVerticesButton.setBackground(activeColor);
         addVerticesButton.addActionListener(e -> {
             engine.setEngineState(EngineState.ADDING_VERTICES);
             setBackgrounds(addVerticesButton);
@@ -63,7 +60,6 @@ public class ControlPanel extends JPanel implements ActionListener {
 
     private void addEdgesButton() {
         addEdgesButton = new JButton("Add Edges");
-        addEdgesButton.setBackground(defaultColor);
         addEdgesButton.addActionListener(e -> {
             engine.setEngineState(EngineState.ADDING_EDGES);
             setBackgrounds(addEdgesButton);
@@ -73,7 +69,6 @@ public class ControlPanel extends JPanel implements ActionListener {
 
     private void moveVertexButton() {
         moveVertexButton = new JButton("Move Vertex");
-        moveVertexButton.setBackground(defaultColor);
         moveVertexButton.addActionListener(e -> {
             engine.setEngineState(EngineState.MOVE_VERTEX);
             setBackgrounds(moveVertexButton);
@@ -83,7 +78,6 @@ public class ControlPanel extends JPanel implements ActionListener {
 
     private void resetButton() {
         resetButton = new JButton("Reset");
-        resetButton.setBackground(defaultColor);
         resetButton.addActionListener(e -> {
             engine.reset();
             setBackgrounds(addVerticesButton);

@@ -1,4 +1,4 @@
-package visualizer.core;
+package visualizer.core.logic;
 
 import java.awt.Graphics2D;
 import java.util.*;

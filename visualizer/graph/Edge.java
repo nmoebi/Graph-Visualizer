@@ -1,8 +1,8 @@
 package visualizer.graph;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
+import visualizer.engine.config.Colors;
 import visualizer.engine.render.*;
 
 public final class Edge implements Renderable {
@@ -19,7 +19,7 @@ public final class Edge implements Renderable {
     @Override
     public void render(Graphics2D graphics) {
         graphics.setStroke(new BasicStroke(4));
-        graphics.setColor(Color.BLACK);
+        graphics.setColor(Colors.BLACK);
         
         graphics.drawLine(
             vertex1.getXPosition(), vertex1.getYPosition(),

@@ -1,8 +1,8 @@
 package visualizer.util;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
+import visualizer.engine.config.Colors;
 import visualizer.engine.render.RenderLayer;
 import visualizer.engine.render.Renderable;
 
@@ -25,7 +25,7 @@ public class PartialEdge implements Renderable {
 
     @Override
     public void render(Graphics2D graphics) {
-        graphics.setColor(Color.lightGray);
+        graphics.setColor(Colors.GRAY);
         graphics.setStroke(new BasicStroke(3));
 
         graphics.drawLine(xFirst, yFirst, xLast, yLast);

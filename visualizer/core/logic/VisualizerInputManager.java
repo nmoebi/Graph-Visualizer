@@ -1,4 +1,4 @@
-package visualizer.core;
+package visualizer.core.logic;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;

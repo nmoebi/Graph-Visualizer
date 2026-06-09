@@ -1,18 +1,18 @@
 package visualizer.graph;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import visualizer.engine.config.Colors;
 import visualizer.engine.render.RenderLayer;
 import visualizer.engine.render.Renderable;
 
 public final class Vertex implements Renderable, Comparable<Vertex> {
     
     private final int vertexID;
-    private final int vertexSize = 50;
     
+    private int vertexSize = 50; 
     private int xPosition;
     private int yPosition;
 
@@ -39,13 +39,13 @@ public final class Vertex implements Renderable, Comparable<Vertex> {
     public void render(Graphics2D graphics) {
         graphics.setStroke(new BasicStroke(4));
         
-        graphics.setColor(Color.white);
+        graphics.setColor(Colors.WHITE);
         graphics.fillOval(xPosition-vertexSize/2, yPosition-vertexSize/2, vertexSize, vertexSize);
 
-        graphics.setColor(Color.black);
+        graphics.setColor(Colors.BLACK);
         graphics.drawOval(xPosition-vertexSize/2, yPosition-vertexSize/2, vertexSize, vertexSize);
 
-        graphics.setColor(Color.lightGray);
+        graphics.setColor(Colors.GRAY);
         graphics.setFont(new Font("Arial", Font.BOLD, 30));
         graphics.drawString(this.toString(), xPosition+vertexSize*3/5, yPosition+vertexSize*4/5);
     }
@@ -93,5 +93,9 @@ public final class Vertex implements Renderable, Comparable<Vertex> {
     public void setPosition(int x, int y) {
         this.xPosition = x;
         this.yPosition = y;
+    }
+
+    public void setVertexSize(int vertexSize) {
+        this.vertexSize = vertexSize;
     }
 }
