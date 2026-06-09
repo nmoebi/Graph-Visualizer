@@ -4,4 +4,5 @@ public enum EngineState {
     ADDING_VERTICES,
     ADDING_EDGES,
     MOVE_VERTEX,
+    RUNNING_ALGO,
 }

@@ -12,6 +12,9 @@ public final class Edge implements Renderable {
     public Edge(Vertex vertex1, Vertex vertex2) {
         this.vertex1 = vertex1;
         this.vertex2 = vertex2;
+
+        vertex1.setDegree(vertex1.getDegree()+1);
+        vertex2.setDegree(vertex2.getDegree()+1);
     }
 
     //%%%%%%%%%% Renderable %%%%%%%%%%

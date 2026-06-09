@@ -1,6 +1,8 @@
 package visualizer.core.logic;
 
 import java.awt.Graphics2D;
+import visualizer.algorithm.AlgoManager;
+import visualizer.algorithm.Algorithm;
 import visualizer.engine.InputManager;
 import visualizer.engine.VisEngine;
 import visualizer.engine.config.Config;
@@ -15,27 +17,35 @@ public class VisualizerEngine implements VisEngine{
     private final InputManager inputManager;
     private final RenderManager renderManager;
     private final StateManager stateManager;
+    private final AlgoManager algoManager;
     private final Graph graph;
     private final Config config;
 
     public VisualizerEngine(final InputManager inputManager,
                             final RenderManager renderManager,
                             final StateManager stateManager,
-                            final Config config) {
+                            final AlgoManager algoManager,
+                            final Config config,
+                            final Graph graph) {
         this.inputManager = inputManager;
         this.renderManager = renderManager;
         this.stateManager = stateManager;
+        this.algoManager = algoManager;
         this.config = config;
-        this.graph = new Graph();
+        this.graph = graph;
 
-        initialiseInputManager();
+        initialiseManagers();
         registerBackgroundAndUi();
     }
 
-    private void initialiseInputManager() {
+    private void initialiseManagers() {
         inputManager.setEngine(this);
         inputManager.setGraph(graph);
         inputManager.addHandlers();
+
+        algoManager.setEngine(this);
+        algoManager.setGraph(graph);
+        algoManager.initialiseAlgorithms();
     }
 
     private void registerBackgroundAndUi() {
@@ -74,7 +84,11 @@ public class VisualizerEngine implements VisEngine{
     @Override
     public void setEngineState(EngineState state) {
         stateManager.setEngineState(state);
-        System.out.println("Engine state changed to " + state);
+    }
+
+    @Override
+    public void revertEngineState() {
+        stateManager.revertEngineState();
     }
 
     @Override
@@ -88,5 +102,10 @@ public class VisualizerEngine implements VisEngine{
     @Override
     public Config getConfig() {
         return config;
+    }
+
+    @Override
+    public void runAlgorithm(Algorithm algo) {
+        algoManager.runAlgorithm(algo);
     }
 }

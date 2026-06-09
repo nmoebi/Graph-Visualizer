@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import visualizer.algorithm.Algorithm;
 import visualizer.engine.VisEngine;
 import visualizer.engine.config.Colors;
 import visualizer.engine.config.Config;
@@ -21,6 +22,7 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
     private JButton addEdgesButton;
     private JButton moveVertexButton;
     private JButton resetButton;
+    private JButton sumColoringButton;
 
 
     public ControlPanel(final VisEngine engine, Config config) {
@@ -39,6 +41,7 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
         addEdgesButton();
         moveVertexButton();
         resetButton(); 
+        sumColoringButton();
         setBackgrounds(addVerticesButton);       
     }
 
@@ -83,6 +86,14 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
             setBackgrounds(addVerticesButton);
         });
         this.add(resetButton);
+    }
+
+    private void sumColoringButton() {
+        sumColoringButton = new JButton("Sum Coloring");
+        sumColoringButton.addActionListener(e -> {
+            engine.runAlgorithm(Algorithm.SUM_COLORING);
+        });
+        this.add(sumColoringButton);
     }
 
     @Override

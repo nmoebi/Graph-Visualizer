@@ -4,4 +4,5 @@ public interface StateManager {
     EngineState getEngineState();
     void setEngineState(EngineState state);
     void setDefaultState();
+    void revertEngineState();
 }

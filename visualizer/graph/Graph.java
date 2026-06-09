@@ -3,9 +3,12 @@ package visualizer.graph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import visualizer.graph.coloring.ColoringManager;
 import visualizer.util.Pair;
 
 public final class Graph {
+
+    ColoringManager coloringManager = new ColoringManager(this);
 
     private final VertexFactory vertexFactory = new VertexFactory();
     private final EdgeFactory edgeFactory = new EdgeFactory();
@@ -32,7 +35,6 @@ public final class Graph {
         vertices.add(v);
         verticesByID.put(v.getVertexID(), v);
         neighborsMap.put(v, new HashSet<>());
-
         return v;
     }
 
@@ -86,5 +88,13 @@ public final class Graph {
             throw new IllegalArgumentException("Error: Accessing non-existing edge");
         
         return edgeMap.get(key);
-    }      
+    }    
+
+    public ColoringManager getColoringManager() {
+        return coloringManager;
+    }
+
+    public HashMap<Vertex, HashSet<Vertex>> getNeighborsMap() {
+        return neighborsMap;
+    }
 }

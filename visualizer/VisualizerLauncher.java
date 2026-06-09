@@ -2,6 +2,7 @@ package visualizer;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
+import visualizer.algorithm.AlgoManager;
 import visualizer.core.logic.VisualizerEngine;
 import visualizer.core.logic.VisualizerInputManager;
 import visualizer.core.logic.VisualizerRenderManager;
@@ -10,13 +11,15 @@ import visualizer.core.swing.ControlPanel;
 import visualizer.core.swing.VisualizerPanel;
 import visualizer.engine.VisEngine;
 import visualizer.engine.config.Config;
+import visualizer.graph.Graph;
 
 public class VisualizerLauncher {
     public static void main(String[] args) {
         final int panelWidth = 1600;
         final VisualizerInputManager inputManager = new VisualizerInputManager();
         final Config config = new Config(panelWidth, 9*panelWidth/16);
-        final VisEngine engine = new VisualizerEngine(inputManager, new VisualizerRenderManager(), new VisualizerStateManager(), config);
+        final Graph graph = new Graph();
+        final VisEngine engine = new VisualizerEngine(inputManager, new VisualizerRenderManager(), new VisualizerStateManager(), new AlgoManager(), config, graph);
         final VisualizerPanel drawPanel = new VisualizerPanel(engine, config);
             inputManager.installMouseListener(drawPanel);
 
