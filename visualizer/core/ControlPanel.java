@@ -20,13 +20,19 @@ public class ControlPanel extends JPanel implements ActionListener {
     private final Color defaultColor = Color.lightGray;
     private final Color backgroundColor = Color.white;
 
+    private JButton addVerticesButton;
+    private JButton addEdgesButton;
+    private JButton moveVertexButton;
+    private JButton resetButton;
+
+
     public ControlPanel(final VisEngine engine, Config config) {
         super();
         this.engine = engine;
 
         setLayout(new FlowLayout(FlowLayout.CENTER, 12, 12));
         setBackground(backgroundColor);
-        setBorder(BorderFactory.createLineBorder(Color.lightGray, 2));
+        setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.lightGray));
 
         addComponents();
     }
@@ -35,6 +41,7 @@ public class ControlPanel extends JPanel implements ActionListener {
         addVerticesButton();
         addEdgesButton();
         moveVertexButton();
+        resetButton();        
     }
 
     private void setBackgrounds(Component activeComponent) {
@@ -45,7 +52,7 @@ public class ControlPanel extends JPanel implements ActionListener {
     }
 
         private void addVerticesButton() {
-        JButton addVerticesButton = new JButton("Add Vertices");
+        addVerticesButton = new JButton("Add Vertices");
         addVerticesButton.setBackground(activeColor);
         addVerticesButton.addActionListener(e -> {
             engine.setEngineState(EngineState.ADDING_VERTICES);
@@ -55,7 +62,7 @@ public class ControlPanel extends JPanel implements ActionListener {
     }
 
     private void addEdgesButton() {
-        JButton addEdgesButton = new JButton("Add Edges");
+        addEdgesButton = new JButton("Add Edges");
         addEdgesButton.setBackground(defaultColor);
         addEdgesButton.addActionListener(e -> {
             engine.setEngineState(EngineState.ADDING_EDGES);
@@ -65,13 +72,23 @@ public class ControlPanel extends JPanel implements ActionListener {
     }
 
     private void moveVertexButton() {
-        JButton moveVertexButton = new JButton("Move Vertex");
+        moveVertexButton = new JButton("Move Vertex");
         moveVertexButton.setBackground(defaultColor);
         moveVertexButton.addActionListener(e -> {
             engine.setEngineState(EngineState.MOVE_VERTEX);
             setBackgrounds(moveVertexButton);
         });
         this.add(moveVertexButton);
+    }
+
+    private void resetButton() {
+        resetButton = new JButton("Reset");
+        resetButton.setBackground(defaultColor);
+        resetButton.addActionListener(e -> {
+            engine.reset();
+            setBackgrounds(addVerticesButton);
+        });
+        this.add(resetButton);
     }
 
     @Override

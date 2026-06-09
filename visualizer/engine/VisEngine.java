@@ -10,4 +10,5 @@ public interface VisEngine {
     void deregisterObject(Object object);
     void step();
     void render(Graphics2D graphics);
+    void reset();
 }

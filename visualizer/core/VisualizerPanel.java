@@ -22,12 +22,14 @@ public class VisualizerPanel extends JPanel implements ActionListener {
     
     public VisualizerPanel(final VisEngine engine, final Config config) {
         super();
-        this.setLayout(new BorderLayout());
         this.engine = engine;
+        
+        setLayout(new BorderLayout());
         setPreferredSize(new Dimension(config.getWidth(), config.getHeight()));
+        setBackground(java.awt.Color.white);
+
         timer = new Timer(MS_PER_FRAME, this);
         timer.start();
-        setBackground(java.awt.Color.white);
     }
 
     @Override

@@ -17,6 +17,15 @@ public final class Graph {
     private final ArrayList<Edge>                              edges = new ArrayList<>();
     private final HashMap<Pair<Vertex, Vertex>, Edge>        edgeMap = new HashMap<>();
 
+    public void reset() {
+        vertices.clear();
+        verticesByID.clear();
+        neighborsMap.clear();
+        edges.clear();
+        edgeMap.clear();
+        vertexFactory.reset();
+    }
+
     public Vertex newVertex(int xPosition, int yPosition) {
         Vertex v = vertexFactory.createVertex(xPosition, yPosition);
         System.out.println("Vertex " + v.getVertexID() + " created");

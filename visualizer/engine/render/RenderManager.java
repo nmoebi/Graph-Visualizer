@@ -6,4 +6,5 @@ public interface RenderManager {
     void registerRenderable(Renderable renderable);
     void deregisterRenderable(Renderable renderable);
     void render(Graphics2D graphics);
+    void reset();
 }

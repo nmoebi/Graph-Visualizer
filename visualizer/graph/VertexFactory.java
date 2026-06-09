@@ -7,4 +7,8 @@ public final class VertexFactory {
     public Vertex createVertex(int xPosition, int yPosition) {
         return new Vertex(vertexCounter++, xPosition, yPosition);
     }
+
+    public void reset() {
+        vertexCounter = 0;
+    }
 }

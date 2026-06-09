@@ -32,17 +32,6 @@ public class VisualizerEngine implements VisEngine{
         registerBackgroundAndUi();
     }
 
-    @Override
-    public EngineState getEngineState() {
-        return stateManager.getEngineState();
-    }
-
-    @Override
-    public void setEngineState(EngineState state) {
-        stateManager.setEngineState(state);
-        System.out.println("Engine state changed to " + state);
-    }
-
     private void initialiseInputManager() {
         inputManager.setEngine(this);
         inputManager.setGraph(graph);
@@ -75,5 +64,24 @@ public class VisualizerEngine implements VisEngine{
         if (object instanceof Renderable renderable) {
             renderManager.deregisterRenderable(renderable);
         }   
+    }
+
+    @Override
+    public EngineState getEngineState() {
+        return stateManager.getEngineState();
+    }
+
+    @Override
+    public void setEngineState(EngineState state) {
+        stateManager.setEngineState(state);
+        System.out.println("Engine state changed to " + state);
+    }
+
+    @Override
+    public void reset() {
+
+        renderManager.reset();
+        graph.reset();
+        setEngineState(EngineState.ADDING_VERTICES);
     }
 }

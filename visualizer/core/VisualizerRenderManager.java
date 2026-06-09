@@ -32,4 +32,10 @@ public class VisualizerRenderManager implements RenderManager {
             }
         }
     }
+
+    @Override
+    public void reset() {
+        buckets.get(RenderLayer.EDGES).clear();
+        buckets.get(RenderLayer.VERTICES).clear();
+    }
 }
