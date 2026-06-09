@@ -23,7 +23,7 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
     private JButton moveVertexButton;
     private JButton resetButton;
     private JButton sumColoringButton;
-
+    private JButton bestColoringsButton;
 
     public ControlPanel(final VisEngine engine, Config config) {
         super();
@@ -41,7 +41,9 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
         addEdgesButton();
         moveVertexButton();
         resetButton(); 
+        bestColoringsButton();
         sumColoringButton();
+
         setBackgrounds(addVerticesButton);       
     }
 
@@ -94,6 +96,14 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
             engine.runAlgorithm(Algorithm.SUM_COLORING);
         });
         this.add(sumColoringButton);
+    }
+
+    private void bestColoringsButton() {
+        bestColoringsButton = new JButton("Best Colorings");
+        bestColoringsButton.addActionListener(e -> {
+            engine.showBestColoring();
+        });
+        this.add(bestColoringsButton);
     }
 
     @Override

@@ -20,7 +20,6 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
     private final AlgoManager algoManager;
     private Thread coloringThread;
 
-    private int bestColoringSum;
     private int sumOfColorAmounts;
     private int sleepDuration;
     private int n; //Size of sortedVertices
@@ -55,9 +54,15 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
         n = sortedVertices.size();
 
         neighbors = graph.getNeighborsMap();
+        for(Vertex v : sortedVertices) {
+            System.out.print(v + " neighbors: " );
+            for(Vertex neighbor : neighbors.get(v)) {
+                System.out.print(neighbor + " ");
+            }
+            System.out.println();
+        }
 
         coloringManager.clearBestColorings();
-        bestColoringSum = Integer.MAX_VALUE;
         
         sumOfColorAmounts = 0;
         for(Vertex vertex : sortedVertices) {
@@ -66,14 +71,14 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
         }
     }
 
-    private void acceptColoring() {
-        Coloring currentColoring = coloringManager.getCurrentColoring();
-        int coloringSum = currentColoring.getColoringSum();
-        if(coloringSum <= bestColoringSum) {
+    private void acceptColoring(Coloring currentColoring) {
+        int bestColoringSum =  coloringManager.getBestColoringSum();
+        int currentColoringSum = currentColoring.getCurrentSum();
+
+        if(currentColoringSum <= bestColoringSum) {
             
-            if (coloringSum < bestColoringSum) {
+            if (currentColoringSum < bestColoringSum) {
                 coloringManager.clearBestColorings();
-                bestColoringSum = coloringSum;
             }
             coloringManager.saveBestColoring(currentColoring);
         }
@@ -97,14 +102,15 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
         if(algoManager.getEngineState() == EngineState.RUNNING_ALGO) {
             if(i < n) {
                 Vertex v = sortedVertices.get(i);
-                int minSum = bestColoringSum;
+
+                int minSum = coloringManager.getBestColoringSum();
                 int maxColor = (sumOfColorAmounts == n ? v.getDegree()+2 : sumOfColorAmounts);
 
                 for(int x=1; x < maxColor; x++) {
                     
                     int nextSum = currentSum + x + v.getColorAmount()-1;
+                    
                     if(nextSum > minSum) {
-                        v.setDefaultColors();
                         break;
                     }
 
@@ -129,7 +135,7 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
                 v.setDefaultColors();
             }
             else {
-                acceptColoring();
+                acceptColoring(coloringManager.getCurrentColoring());
             }
         }
         

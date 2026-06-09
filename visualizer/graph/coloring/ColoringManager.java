@@ -16,7 +16,10 @@ public class ColoringManager {
 
     public void setNextBestColoring() {
         if(!bestColorings.isEmpty()) {
-            colorGraph(bestColorings.get(bestColoringsCounter % bestColorings.size()));
+            int index = bestColoringsCounter % bestColorings.size();
+            Coloring bestColoring = bestColorings.get(index);
+            System.out.println("Setting best coloring #" + (index+1) + "/" + bestColorings.size() + " with sum = " + bestColoring.getCurrentSum());
+            colorGraph(bestColoring);
             bestColoringsCounter++;
         }
     }
@@ -40,6 +43,13 @@ public class ColoringManager {
 
     public void saveBestColoring(Coloring coloring) {
         bestColorings.add(coloring);
+    }
+
+    public int getBestColoringSum() {
+        if(bestColorings.isEmpty())
+            return Integer.MAX_VALUE;
+        else
+            return bestColorings.getFirst().getCurrentSum();
     }
 
     public ArrayList<Coloring> getBestColorings() {

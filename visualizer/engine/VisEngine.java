@@ -16,4 +16,5 @@ public interface VisEngine {
     void reset();
     Config getConfig();
     void runAlgorithm(Algorithm algorithm);
+    void showBestColoring();
 }

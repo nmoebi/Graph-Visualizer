@@ -58,6 +58,11 @@ public class VisualizerEngine implements VisEngine{
     }
 
     @Override
+    public void showBestColoring() {
+        graph.getColoringManager().setNextBestColoring();
+    }
+
+    @Override
     public void render(final Graphics2D graphics) {
         renderManager.render(graphics);
     }

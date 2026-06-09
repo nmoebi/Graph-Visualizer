@@ -39,6 +39,7 @@ public final class Vertex implements Renderable, Comparable<Vertex> {
     }
 
     public void setDefaultColors() {
+        colors.clear();
         for (int i = 0; i < colorAmount; i++) {
             colors.add(0);
         }
