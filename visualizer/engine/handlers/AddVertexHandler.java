@@ -13,8 +13,7 @@ public class AddVertexHandler implements InteractionHandler {
         this.graph = graph;
     }
 
-    @Override
-    public void handleInput(int xPressed, int yPressed, int xReleased, int yReleased) {
+    @Override public void onPress(int xPressed, int yPressed) {
         engine.registerObject(graph.newVertex(xPressed, yPressed));
     }
 }

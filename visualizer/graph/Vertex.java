@@ -2,6 +2,7 @@ package visualizer.graph;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import visualizer.engine.render.RenderLayer;
@@ -41,8 +42,12 @@ public final class Vertex implements Renderable, Comparable<Vertex> {
         graphics.setColor(Color.white);
         graphics.fillOval(xPosition-vertexSize/2, yPosition-vertexSize/2, vertexSize, vertexSize);
 
-        graphics.setColor(Color.BLACK);
+        graphics.setColor(Color.black);
         graphics.drawOval(xPosition-vertexSize/2, yPosition-vertexSize/2, vertexSize, vertexSize);
+
+        graphics.setColor(Color.lightGray);
+        graphics.setFont(new Font("Arial", Font.BOLD, 30));
+        graphics.drawString(this.toString(), xPosition+vertexSize*3/5, yPosition+vertexSize*4/5);
     }
 
     @Override 
@@ -83,5 +88,10 @@ public final class Vertex implements Renderable, Comparable<Vertex> {
 
     public void setColors(ArrayList<Integer> colors) {
         this.colors = colors;
+    }
+
+    public void setPosition(int x, int y) {
+        this.xPosition = x;
+        this.yPosition = y;
     }
 }

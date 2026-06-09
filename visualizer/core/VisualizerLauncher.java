@@ -1,5 +1,6 @@
 package visualizer.core;
 
+import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import visualizer.engine.VisEngine;
 import visualizer.engine.config.Config;
@@ -10,16 +11,19 @@ public class VisualizerLauncher {
         final VisualizerInputManager inputManager = new VisualizerInputManager();
         final Config config = new Config(panelWidth, 9*panelWidth/16);
         final VisEngine engine = new VisualizerEngine(inputManager, new VisualizerRenderManager(), new VisualizerStateManager(), config);
-        final VisualizerPanel panel = new VisualizerPanel(engine, config);
-        inputManager.installMouseListener(panel);
+        final VisualizerPanel drawPanel = new VisualizerPanel(engine, config);
+            inputManager.installMouseListener(drawPanel);
 
-        initialiseJFrame(panel);
+        final ControlPanel controlPanel = new ControlPanel(engine, config);
+
+        initialiseJFrame(drawPanel, controlPanel);
     }
 
-    private static void initialiseJFrame(final VisualizerPanel panel) {
+    private static void initialiseJFrame(final VisualizerPanel panel, final ControlPanel controlPanel) {
         final JFrame frame = new JFrame("Graph Visualizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
+        frame.add(panel, BorderLayout.CENTER);
+        frame.add(controlPanel, BorderLayout.SOUTH);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

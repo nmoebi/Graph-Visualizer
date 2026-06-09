@@ -1,23 +1,22 @@
 package visualizer.core;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import javax.swing.event.MouseInputAdapter;
 import visualizer.engine.InputManager;
 import visualizer.engine.VisEngine;
 import visualizer.engine.handlers.AddEdgeHandler;
 import visualizer.engine.handlers.AddVertexHandler;
-import visualizer.engine.states.EngineState;
+import visualizer.engine.handlers.MoveVertexHandler;
 import visualizer.graph.Graph;
 
 public class VisualizerInputManager implements InputManager {
     private VisEngine visEngine;
     private Graph graph;
 
-    int xPressed, yPressed;
-    int xReleased, yReleased;
-
     AddVertexHandler addVertexHandler;
-    AddEdgeHandler AddEdgeHandler;
+    AddEdgeHandler addEdgeHandler;
+    MoveVertexHandler moveVertexHandler;
 
     @Override
     public void setEngine(VisEngine visEngine) {
@@ -32,15 +31,37 @@ public class VisualizerInputManager implements InputManager {
     @Override
     public void addHandlers() {
         addVertexHandler = new AddVertexHandler(visEngine, graph);
-        AddEdgeHandler = new AddEdgeHandler(visEngine, graph);
+        addEdgeHandler = new AddEdgeHandler(visEngine, graph);
+        moveVertexHandler = new MoveVertexHandler(graph);
     }
 
-    @Override 
-    public void handleInput() {
-        
+    @Override
+    public void dispatchPress(int x, int y) {
         switch(visEngine.getEngineState()) {
-            case ADDING_VERTICES -> addVertexHandler.handleInput(xPressed, yPressed, xReleased, yReleased);
-            case ADDING_EDGES -> AddEdgeHandler.handleInput(xPressed, yPressed, xReleased, yReleased);
+            case ADDING_VERTICES -> addVertexHandler.onPress(x, y);
+            case ADDING_EDGES -> addEdgeHandler.onPress(x, y);
+            case MOVE_VERTEX -> moveVertexHandler.onPress(x, y);
+        }
+    }
+
+    @Override
+    public void dispatchRelease(int x, int y) {
+        switch(visEngine.getEngineState()) {
+            case ADDING_EDGES -> addEdgeHandler.onRelease(x, y);
+            case MOVE_VERTEX -> moveVertexHandler.onRelease(x, y);
+        }
+    }
+
+    @Override
+    public void dispatchClick(int x, int y) {
+        //switch(visEngine.getEngineState()) {}
+    }
+
+    @Override
+    public void dispatchDrag(int x, int y) {
+        switch(visEngine.getEngineState()) {
+            case ADDING_EDGES -> addEdgeHandler.onDrag(x, y);
+            case MOVE_VERTEX -> moveVertexHandler.onDrag(x, y);
         }
     }
 
@@ -50,25 +71,24 @@ public class VisualizerInputManager implements InputManager {
             
             @Override 
             public void mouseClicked(MouseEvent e) {
-                
+                dispatchClick(e.getX(), e.getY());
             }
 
             @Override 
             public void mousePressed(MouseEvent e) {
-                xPressed = e.getX();
-                yPressed = e.getY(); 
-                System.out.println("Pressed: " + xPressed + ", " + yPressed);
-                if(visEngine.getEngineState() == EngineState.ADDING_VERTICES)
-                    handleInput();
+                dispatchPress(e.getX(), e.getY());
             }
 
             @Override 
             public void mouseReleased(MouseEvent e) {
-                xReleased = e.getX();
-                yReleased = e.getY();
-                System.out.println("Released: " + xReleased + ", " + yReleased); 
-                if(visEngine.getEngineState() == EngineState.ADDING_EDGES)
-                    handleInput();
+                dispatchRelease(e.getX(), e.getY());
+            }
+        });
+
+        target.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override 
+            public void mouseDragged(MouseEvent e) {
+                dispatchDrag(e.getX(), e.getY());
             }
         });
     }

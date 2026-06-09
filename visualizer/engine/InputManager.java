@@ -3,9 +3,14 @@ package visualizer.engine;
 import visualizer.graph.Graph;
 
 public interface InputManager {
+    
     void installMouseListener(java.awt.Component target);
-    void handleInput();
     void setEngine(VisEngine visualizerEngine);
     void setGraph(Graph graph);
     void addHandlers();
+
+    void dispatchPress(int x, int y);
+    void dispatchRelease(int x, int y);
+    void dispatchClick(int x, int y);
+    void dispatchDrag(int x, int y);
 }
