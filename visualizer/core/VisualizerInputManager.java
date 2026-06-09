@@ -32,7 +32,7 @@ public class VisualizerInputManager implements InputManager {
     public void addHandlers() {
         addVertexHandler = new AddVertexHandler(visEngine, graph);
         addEdgeHandler = new AddEdgeHandler(visEngine, graph);
-        moveVertexHandler = new MoveVertexHandler(graph);
+        moveVertexHandler = new MoveVertexHandler(visEngine, graph);
     }
 
     @Override

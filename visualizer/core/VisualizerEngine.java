@@ -84,4 +84,9 @@ public class VisualizerEngine implements VisEngine{
         graph.reset();
         setEngineState(EngineState.ADDING_VERTICES);
     }
+
+    @Override
+    public Config getConfig() {
+        return config;
+    }
 }

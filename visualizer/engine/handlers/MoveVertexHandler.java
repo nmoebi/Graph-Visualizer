@@ -1,5 +1,7 @@
 package visualizer.engine.handlers;
 
+import visualizer.engine.VisEngine;
+import visualizer.engine.config.Config;
 import visualizer.graph.Graph;
 import visualizer.graph.Vertex;
 
@@ -8,9 +10,12 @@ public class MoveVertexHandler implements InteractionHandler {
     private final Graph graph;
     Vertex vertex;
     private boolean vertexGrabbed = false;
+    
+    private final Config config;
 
-    public MoveVertexHandler(Graph graph) {
+    public MoveVertexHandler(VisEngine visEngine, Graph graph) {
         this.graph = graph;
+        this.config = visEngine.getConfig();
     }
 
     @Override public void onPress(int x, int y) {
@@ -29,7 +34,10 @@ public class MoveVertexHandler implements InteractionHandler {
 
     @Override
     public void onRelease(int x, int y) {
+        int gridSize = config.getGridSize(); 
         if(vertexGrabbed) {
+            x = (int) (Math.round((double) x / gridSize) * gridSize);
+            y = (int) (Math.round((double) y / gridSize) * gridSize);
             vertex.setPosition(x, y);
             vertexGrabbed = false;
         }

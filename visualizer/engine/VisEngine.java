@@ -1,6 +1,7 @@
 package visualizer.engine;
 
 import java.awt.Graphics2D;
+import visualizer.engine.config.Config;
 import visualizer.engine.states.EngineState;
 
 public interface VisEngine {
@@ -11,4 +12,5 @@ public interface VisEngine {
     void step();
     void render(Graphics2D graphics);
     void reset();
+    Config getConfig();
 }
