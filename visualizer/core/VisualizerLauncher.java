@@ -9,7 +9,7 @@ public class VisualizerLauncher {
         final int panelWidth = 1600;
         final VisualizerInputManager inputManager = new VisualizerInputManager();
         final Config config = new Config(panelWidth, 9*panelWidth/16);
-        final VisEngine engine = new VisualizerEngine(inputManager, new VisualizerRenderManager(), config);
+        final VisEngine engine = new VisualizerEngine(inputManager, new VisualizerRenderManager(), new VisualizerStateManager(), config);
         final VisualizerPanel panel = new VisualizerPanel(engine, config);
         inputManager.installMouseListener(panel);
 

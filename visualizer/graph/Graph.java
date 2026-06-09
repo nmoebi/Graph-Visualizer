@@ -19,7 +19,7 @@ public final class Graph {
 
     public Vertex newVertex(int xPosition, int yPosition) {
         Vertex v = vertexFactory.createVertex(xPosition, yPosition);
-        
+        System.out.println("Vertex " + v.getVertexID() + " created");
         vertices.add(v);
         verticesByID.put(v.getVertexID(), v);
         neighborsMap.put(v, new HashSet<>());
@@ -27,18 +27,23 @@ public final class Graph {
         return v;
     }
 
-    public void newEdge(Vertex a, Vertex b) {
+    public Edge newEdge(Vertex a, Vertex b) {
+
+        if(a == b || a == null || b == null) throw new IllegalArgumentException("Error: bad vertices input for edge");
 
         Pair<Vertex, Vertex> key = Pair.ofOrdered(a, b);
 
         if(!edgeMap.containsKey(key)) {
             Edge e = edgeFactory.createEdge(a, b);
+            System.out.println("Edge (" + a + ", " + b + ") created");
             edges.add(e);
             edgeMap.put(key, e);
 
             neighborsMap.get(a).add(b);
             neighborsMap.get(b).add(a);    
+            return e;
         }
+        else return edgeMap.get(key);
     }
 
     public ArrayList<Vertex> getVertices() {

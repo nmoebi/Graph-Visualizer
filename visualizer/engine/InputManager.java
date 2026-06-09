@@ -7,4 +7,5 @@ public interface InputManager {
     void handleInput();
     void setEngine(VisEngine visualizerEngine);
     void setGraph(Graph graph);
+    void addHandlers();
 }

@@ -28,11 +28,15 @@ public final class Vertex implements Renderable, Comparable<Vertex> {
         this.yPosition = yPosition;
     }
 
+    @Override public String toString() {
+        return "V" + vertexID;
+    }
+
     //%%%%%%%%%% Renderable %%%%%%%%%%
 
     @Override
     public void render(Graphics2D graphics) {
-        graphics.setStroke(new BasicStroke(3));
+        graphics.setStroke(new BasicStroke(4));
         
         graphics.setColor(Color.white);
         graphics.fillOval(xPosition-vertexSize/2, yPosition-vertexSize/2, vertexSize, vertexSize);

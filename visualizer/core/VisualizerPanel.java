@@ -1,15 +1,18 @@
 package visualizer.core;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import visualizer.engine.VisEngine;
 import visualizer.engine.config.Config;
+import visualizer.engine.states.EngineState;
 
 public class VisualizerPanel extends JPanel implements ActionListener {
     
@@ -27,6 +30,30 @@ public class VisualizerPanel extends JPanel implements ActionListener {
         timer.start();
 
         setBackground(java.awt.Color.white);
+
+        //temporary buttons
+        JButton addEdgesButton;
+        JButton addVerticesButton;
+        addVerticesButton = new JButton("Add Vertices");
+        addEdgesButton = new JButton("Add Edges");
+        
+        addVerticesButton.setBackground(Color.green);
+        addEdgesButton.setBackground(Color.lightGray);
+
+        addVerticesButton.addActionListener(e -> {
+            addEdgesButton.setBackground(Color.lightGray);
+            addVerticesButton.setBackground(Color.green);
+            engine.setEngineState(EngineState.ADDING_VERTICES);
+        });
+        
+        addEdgesButton.addActionListener(e -> {
+            addEdgesButton.setBackground(Color.green);
+            addVerticesButton.setBackground(Color.lightGray);
+            engine.setEngineState(EngineState.ADDING_EDGES);
+        });
+
+        this.add(addVerticesButton);
+        this.add(addEdgesButton);
     }
 
     @Override
