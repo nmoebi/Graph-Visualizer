@@ -52,6 +52,14 @@ public class ColoringManager {
             return bestColorings.getFirst().getCurrentSum();
     }
 
+    public int getBestMaxColor() {
+        if(!bestColorings.isEmpty())
+            return bestColorings.getFirst().getMaxColor();
+
+        else 
+            return -1;
+    }
+
     public ArrayList<Coloring> getBestColorings() {
         return bestColorings;
     }

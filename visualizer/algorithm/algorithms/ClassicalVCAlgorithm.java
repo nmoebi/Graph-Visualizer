@@ -1,17 +1,19 @@
-package visualizer.algorithm;
+package visualizer.algorithm.algorithms;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import javax.swing.SwingUtilities;
+import visualizer.algorithm.AlgoManager;
+import visualizer.algorithm.ColoringAlgorithm;
 import visualizer.engine.states.EngineState;
 import visualizer.graph.Graph;
 import visualizer.graph.Vertex;
 import visualizer.graph.coloring.Coloring;
 import visualizer.graph.coloring.ColoringManager;
 
-public class SumColoringAlgorithm implements ColoringAlgorithm {
-    
+public class ClassicalVCAlgorithm implements ColoringAlgorithm {
+
     private final Graph graph;
     private ArrayList<Vertex> sortedVertices;
     private HashMap<Vertex, HashSet<Vertex>> neighbors;
@@ -20,12 +22,12 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
     private final AlgoManager algoManager;
     private Thread coloringThread;
 
-    private int sumOfColorAmounts;
     private int sleepDuration;
     private int n; //Size of sortedVertices
     private boolean running = false;
 
-    public SumColoringAlgorithm(AlgoManager algoManager, Graph graph, int sleepDuration) {
+
+    public ClassicalVCAlgorithm(AlgoManager algoManager, Graph graph, int sleepDuration) {
         this.algoManager = algoManager;
         this.graph = graph;
         this.sleepDuration = sleepDuration;
@@ -35,7 +37,7 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
 
     @Override public void run() {
         running = true;
-        sumColoringAlgo();
+        classicalVCAlgo();
     }
 
     @Override public boolean stop() {
@@ -69,33 +71,32 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
         
         coloringManager.clearBestColorings();
         
-        sumOfColorAmounts = 0;
         for(Vertex vertex : sortedVertices) {
             vertex.setDefaultColors();
-            sumOfColorAmounts += vertex.getColorAmount();
         }
     }
 
     private void acceptColoring(Coloring currentColoring) {
-        int bestColoringSum =  coloringManager.getBestColoringSum();
-        int currentColoringSum = currentColoring.getCurrentSum();
+        int bestMaxColor =  coloringManager.getBestMaxColor();
+        int currentMaxColor = currentColoring.getMaxColor();
 
-        if(currentColoringSum <= bestColoringSum) {
+        if(currentMaxColor <= bestMaxColor) {
             
-            if (currentColoringSum < bestColoringSum) {
+            if (currentMaxColor < bestMaxColor) {
                 coloringManager.clearBestColorings();
             }
             coloringManager.saveBestColoring(currentColoring);
         }
     }
 
-    private void sumColoringAlgo() {
+    private void classicalVCAlgo() {
         resetAlgoData();
         algoManager.setState(EngineState.RUNNING_ALGO);
         coloringThread = new Thread(() ->  {
-            color(0, 0);
+            greedyColor();
+            color(0);
             SwingUtilities.invokeLater(() -> {
-                System.out.println("SumColoringAlgo finished");
+                System.out.println("ClassicalVertexColoringAlgorithm finished with " + coloringManager.getBestColorings().size());
                 coloringManager.setNextBestColoring();
                 algoManager.revertEngineState();
             });
@@ -104,7 +105,7 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
     }
 
     @SuppressWarnings("")
-    private void color(int i, int currentSum) {
+    private void color(int i) {
 
         if(!running || Thread.currentThread().isInterrupted()) {
             return;
@@ -113,16 +114,13 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
         if(i < n) {
             Vertex v = sortedVertices.get(i);
 
-            int minSum = coloringManager.getBestColoringSum();
-            int maxColor = (sumOfColorAmounts == n ? v.getDegree()+2 : sumOfColorAmounts);
+            int bestMaxColor = coloringManager.getBestMaxColor();
 
-            for(int x=1; x < maxColor; x++) {
+            for(int x=1; x <= bestMaxColor; x++) {
                 
-                int nextSum = currentSum + x + v.getColorAmount()-1;
-                
-                if(nextSum > minSum) {
-                    break;
-                }
+                if (x + v.getColorAmount() - 1 > bestMaxColor) {
+                    break; 
+                }       
 
                 ArrayList<Integer> colors = new ArrayList<>(v.getColorAmount());
                 for (int y = 0; y < v.getColorAmount(); y++) {
@@ -136,10 +134,11 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     System.out.println(e.getMessage());
+                    return;
                 }
 
                 if(isLegal(v)) {
-                    color(i+1, nextSum);
+                    color(i+1);
                 }
             }
             v.setDefaultColors();
@@ -147,6 +146,34 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
         else {
             acceptColoring(coloringManager.getCurrentColoring());
         }        
+    }
+
+    private void greedyColor() {
+        if(!running || Thread.currentThread().isInterrupted()) {
+            return;
+        }
+
+        for(Vertex v : sortedVertices) {
+            int x = 1;
+            while(true) {
+                ArrayList<Integer> colors = new ArrayList<>(v.getColorAmount());
+                for (int y = 0; y < v.getColorAmount(); y++) {
+                    colors.add(x+y);   
+                }
+                v.setColors(colors);
+                
+                if(isLegal(v)) { 
+                    break;
+                }
+                x++;
+            }
+            
+        }
+
+        acceptColoring(coloringManager.getCurrentColoring());
+
+        for(Vertex v : sortedVertices)
+            v.setDefaultColors();
     }
 
     public void setSleepDuration(int sleepDuration) {
