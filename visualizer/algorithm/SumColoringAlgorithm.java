@@ -54,14 +54,7 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
         n = sortedVertices.size();
 
         neighbors = graph.getNeighborsMap();
-        for(Vertex v : sortedVertices) {
-            System.out.print(v + " neighbors: " );
-            for(Vertex neighbor : neighbors.get(v)) {
-                System.out.print(neighbor + " ");
-            }
-            System.out.println();
-        }
-
+        
         coloringManager.clearBestColorings();
         
         sumOfColorAmounts = 0;

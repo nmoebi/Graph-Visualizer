@@ -9,7 +9,7 @@ public class AlgoManager {
     private VisEngine engine;
     private Graph graph;
     private SumColoringAlgorithm sumColoringAlgorithm;
-    private int sleepDuration = 0;
+    private int sleepDuration = 10;
 
     public void setEngine(VisEngine engine) {
         this.engine = engine;

@@ -22,8 +22,11 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
     private JButton addEdgesButton;
     private JButton moveVertexButton;
     private JButton resetButton;
-    private JButton sumColoringButton;
     private JButton bestColoringsButton;
+    private JButton sumColoringButton;
+
+    
+    
 
     public ControlPanel(final VisEngine engine, Config config) {
         super();
@@ -44,7 +47,7 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
         bestColoringsButton();
         sumColoringButton();
 
-        setBackgrounds(addVerticesButton);       
+        setBackgrounds(addVerticesButton);      
     }
 
     private void setBackgrounds(Component activeComponent) {
@@ -90,20 +93,20 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
         this.add(resetButton);
     }
 
-    private void sumColoringButton() {
-        sumColoringButton = new JButton("Sum Coloring");
-        sumColoringButton.addActionListener(e -> {
-            engine.runAlgorithm(Algorithm.SUM_COLORING);
-        });
-        this.add(sumColoringButton);
-    }
-
     private void bestColoringsButton() {
         bestColoringsButton = new JButton("Best Colorings");
         bestColoringsButton.addActionListener(e -> {
             engine.showBestColoring();
         });
         this.add(bestColoringsButton);
+    }
+
+    private void sumColoringButton() {
+        sumColoringButton = new JButton("Sum Coloring");
+        sumColoringButton.addActionListener(e -> {
+            engine.runAlgorithm(Algorithm.SUM_COLORING);
+        });
+        this.add(sumColoringButton);
     }
 
     @Override
@@ -115,6 +118,4 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
     public void paintComponent(final Graphics graphics) {
         super.paintComponent(graphics);
     }
-
-
 }

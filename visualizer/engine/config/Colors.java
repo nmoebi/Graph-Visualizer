@@ -8,6 +8,7 @@ public interface Colors {
     Color WHITE = Color.WHITE;
     Color ACTIVE_COLOR = new Color(75, 210, 25);
     Color INACTIVE_COLOR = new Color(200, 200, 200);
+    Color ALGO_RUNNING_LED = new Color(225, 145, 15);
 
     Color[] VERTEX_COLORS = new Color[] {
         GRAY,                           // 0

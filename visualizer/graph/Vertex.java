@@ -56,17 +56,30 @@ public final class Vertex implements Renderable, Comparable<Vertex> {
 
         graphics.setColor(Colors.BLACK);
         graphics.drawOval(xPosition-vertexSize/2, yPosition-vertexSize/2, vertexSize, vertexSize);
+        
+        if(this.colorAmount == 1) {
+            //VertexID beside Vertex
+            graphics.setFont(new Font("Arial", Font.BOLD, 30));
+            graphics.setColor(Colors.GRAY);
+            graphics.drawString(this.toString(), xPosition+vertexSize*3/5, yPosition+vertexSize*4/5);
 
-        graphics.setColor(Colors.GRAY);
-        graphics.setFont(new Font("Arial", Font.BOLD, 30));
-        graphics.drawString(this.toString(), xPosition+vertexSize*3/5, yPosition+vertexSize*4/5);
+            //Vertex-Color on Vertex
+            if(this.getMaxColor() > 0) {
+                graphics.setColor(Colors.BLACK);
+                graphics.setFont(new Font("Arial", Font.BOLD, 40));
+                graphics.drawString(colors.getFirst().toString() , xPosition-10,  yPosition+13 );
+            }   
+        }
+        else {
+            //VertexID on Vertex
+            graphics.setFont(new Font("Arial", Font.BOLD, 30));
+            graphics.setColor(Colors.BLACK);
+            graphics.drawString(this.toString(), xPosition-17,  yPosition+13);
 
-        if(this.getMaxColor() > 0) {
+            //Vertex-Colors beside Vertex
             graphics.setColor(Colors.BLACK);
             graphics.setFont(new Font("Arial", Font.BOLD, 40));
-            if(colors.size() == 1) {
-                graphics.drawString(colors.getFirst().toString() , xPosition-10,  yPosition+14 );
-            }
+            graphics.drawString(getColorsString(), xPosition, yPosition+vertexSize+10);
         }
     }
 
@@ -114,6 +127,18 @@ public final class Vertex implements Renderable, Comparable<Vertex> {
 
     public int getMaxColor() {
         return Collections.max(this.colors);
+    }
+
+    private String getColorsString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+            for(int color : colors) {
+                sb.append(color).append(" ");
+            }
+            sb.replace(sb.length()-1, sb.length(), "");
+        sb.append("}");
+
+        return sb.toString();
     }
 
     //%%%%%%%%%% Setter %%%%%%%%%%
