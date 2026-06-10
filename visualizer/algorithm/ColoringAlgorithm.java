@@ -1,5 +1,6 @@
 package visualizer.algorithm;
 
 public interface ColoringAlgorithm {
-    void colorGraph();
+    void run();
+    boolean stop();
 }

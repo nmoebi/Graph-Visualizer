@@ -60,7 +60,7 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
         private void addVerticesButton() {
         addVerticesButton = new JButton("Add Vertices");
         addVerticesButton.addActionListener(e -> {
-            engine.setEngineState(EngineState.ADDING_VERTICES);
+            changeState(EngineState.ADDING_VERTICES);
             setBackgrounds(addVerticesButton);
         });
         this.add(addVerticesButton);
@@ -69,7 +69,7 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
     private void addEdgesButton() {
         addEdgesButton = new JButton("Add Edges");
         addEdgesButton.addActionListener(e -> {
-            engine.setEngineState(EngineState.ADDING_EDGES);
+            changeState(EngineState.ADDING_EDGES);
             setBackgrounds(addEdgesButton);
         });
         this.add(addEdgesButton);
@@ -78,7 +78,7 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
     private void moveVertexButton() {
         moveVertexButton = new JButton("Move Vertex");
         moveVertexButton.addActionListener(e -> {
-            engine.setEngineState(EngineState.MOVE_VERTEX);
+            changeState(EngineState.MOVE_VERTEX);
             setBackgrounds(moveVertexButton);
         });
         this.add(moveVertexButton);
@@ -107,6 +107,12 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
             engine.runAlgorithm(Algorithm.SUM_COLORING);
         });
         this.add(sumColoringButton);
+    }
+
+    private void changeState(EngineState engineState) { 
+        if(engine.getEngineState() != EngineState.RUNNING_ALGO) {
+            engine.setEngineState(engineState);
+        }
     }
 
     @Override

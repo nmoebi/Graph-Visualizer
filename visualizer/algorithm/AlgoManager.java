@@ -11,6 +11,8 @@ public class AlgoManager {
     private SumColoringAlgorithm sumColoringAlgorithm;
     private int sleepDuration = 10;
 
+    ColoringAlgorithm activeAlgorithm;
+
     public void setEngine(VisEngine engine) {
         this.engine = engine;
     }
@@ -31,18 +33,19 @@ public class AlgoManager {
         engine.revertEngineState();
     }
     
+    public boolean stopAlgo() {
+        return activeAlgorithm.stop();
+    }
+
     public void initialiseAlgorithms() {
         sumColoringAlgorithm = new SumColoringAlgorithm(this, graph, sleepDuration);
     }
 
     public void runAlgorithm(Algorithm algo) {
         switch (algo) {
-            case SUM_COLORING -> sumColoringAlgorithm();
+            case SUM_COLORING -> activeAlgorithm = sumColoringAlgorithm;
         }
-    }
-
-    private void sumColoringAlgorithm() {
-        sumColoringAlgorithm.colorGraph();
+        activeAlgorithm.run();
     }
 
     public void setSleepDuration(int sleepDuration) {

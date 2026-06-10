@@ -98,7 +98,7 @@ public class VisualizerEngine implements VisEngine{
 
     @Override
     public void reset() {
-
+        algoManager.stopAlgo();
         renderManager.reset();
         graph.reset();
         setEngineState(EngineState.ADDING_VERTICES);
