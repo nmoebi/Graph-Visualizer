@@ -26,6 +26,7 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
     private int n; //Size of sortedVertices
     private boolean running = false;
 
+    private int bestMaxColor;
 
     public ClassicalVCAlgorithm(AlgoManager algoManager, Graph graph, int sleepDuration) {
         this.algoManager = algoManager;
@@ -70,6 +71,7 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
         neighbors = graph.getNeighborsMap();
         
         coloringManager.clearBestColorings();
+        bestMaxColor = graph.getMaxDegree()+1;
         
         for(Vertex vertex : sortedVertices) {
             vertex.setDefaultColors();
@@ -77,12 +79,12 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
     }
 
     private void acceptColoring(Coloring currentColoring) {
-        int bestMaxColor =  coloringManager.getBestMaxColor();
         int currentMaxColor = currentColoring.getMaxColor();
 
         if(currentMaxColor <= bestMaxColor) {
             
             if (currentMaxColor < bestMaxColor) {
+                bestMaxColor = currentMaxColor;
                 coloringManager.clearBestColorings();
             }
             coloringManager.saveBestColoring(currentColoring);
@@ -96,7 +98,7 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
             greedyColor();
             color(0);
             SwingUtilities.invokeLater(() -> {
-                System.out.println("ClassicalVertexColoringAlgorithm finished with " + coloringManager.getBestColorings().size());
+                System.out.println("ClassicalVertexColoringAlgorithm finished with " + coloringManager.getBestColorings().size() + " colorings found");
                 coloringManager.setNextBestColoring();
                 algoManager.revertEngineState();
             });
@@ -113,8 +115,6 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
 
         if(i < n) {
             Vertex v = sortedVertices.get(i);
-
-            int bestMaxColor = coloringManager.getBestMaxColor();
 
             for(int x=1; x <= bestMaxColor; x++) {
                 
@@ -169,9 +169,9 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
             }
             
         }
-
         acceptColoring(coloringManager.getCurrentColoring());
-
+        coloringManager.clearBestColorings();
+        
         for(Vertex v : sortedVertices)
             v.setDefaultColors();
     }

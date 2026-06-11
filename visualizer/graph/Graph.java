@@ -51,7 +51,8 @@ public final class Graph {
             edgeMap.put(key, e);
 
             neighborsMap.get(a).add(b);
-            neighborsMap.get(b).add(a);    
+            neighborsMap.get(b).add(a);  
+  
             return e;
         }
         else return edgeMap.get(key);
@@ -96,5 +97,16 @@ public final class Graph {
 
     public HashMap<Vertex, HashSet<Vertex>> getNeighborsMap() {
         return neighborsMap;
+    }
+
+    public int getMaxDegree() {
+        int maxDegree = 0;
+
+        for (Vertex v : vertices) {
+            if(v.getDegree() > maxDegree) {
+                maxDegree = v.getDegree();
+            }
+        }
+        return maxDegree;
     }
 }

@@ -37,7 +37,7 @@ public class ColoringManager {
 
     public Coloring getCurrentColoring() {
         Coloring currentColoring = new Coloring();
-        currentColoring.saveColoring(graph.getVertices());
+        currentColoring.saveColoring(new ArrayList<>(graph.getVertices()));
         return currentColoring;
     }
 
