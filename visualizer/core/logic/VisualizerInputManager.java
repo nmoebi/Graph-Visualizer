@@ -36,11 +36,26 @@ public class VisualizerInputManager implements InputManager {
     }
 
     @Override
-    public void dispatchPress(int x, int y) {
+    public void dispatchPress(int x, int y, int button) {
         switch(visEngine.getEngineState()) {
-            case ADDING_VERTICES -> addVertexHandler.onPress(x, y);
-            case ADDING_EDGES -> addEdgeHandler.onPress(x, y);
-            case MOVE_VERTEX -> moveVertexHandler.onPress(x, y);
+            case ADDING_VERTICES -> {
+                if(button == MouseEvent.BUTTON1)
+                    addVertexHandler.onPress(x, y);
+            }
+            case ADDING_EDGES -> {
+                if(button == MouseEvent.BUTTON1)
+                    addEdgeHandler.onPress(x, y);
+            }
+            
+            case MOVE_VERTEX -> {
+                if(button == MouseEvent.BUTTON1) 
+                    moveVertexHandler.onPress(x, y);
+                
+                else if (button == MouseEvent.BUTTON2) {
+                    moveVertexHandler.moveAllVertices();
+                    moveVertexHandler.onPress(x, y);
+                }
+            }
         }
     }
 
@@ -53,9 +68,7 @@ public class VisualizerInputManager implements InputManager {
     }
 
     @Override
-    public void dispatchClick(int x, int y) {
-        //switch(visEngine.getEngineState()) {}
-    }
+    public void dispatchClick(int x, int y) { }
 
     @Override
     public void dispatchDrag(int x, int y) {
@@ -76,7 +89,7 @@ public class VisualizerInputManager implements InputManager {
 
             @Override 
             public void mousePressed(MouseEvent e) {
-                dispatchPress(e.getX(), e.getY());
+                dispatchPress(e.getX(), e.getY(), e.getButton());
             }
 
             @Override 

@@ -9,7 +9,7 @@ public interface InputManager {
     void setGraph(Graph graph);
     void addHandlers();
 
-    void dispatchPress(int x, int y);
+    void dispatchPress(int x, int y, int button);
     void dispatchRelease(int x, int y);
     void dispatchClick(int x, int y);
     void dispatchDrag(int x, int y);

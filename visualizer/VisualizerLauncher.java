@@ -1,4 +1,4 @@
-package visualizer;
+ package visualizer;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
