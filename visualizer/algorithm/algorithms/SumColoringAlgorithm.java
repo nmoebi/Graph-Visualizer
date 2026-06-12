@@ -25,7 +25,6 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
     private int sumOfColorAmounts;
     private int sleepDuration;
     private int n; //Size of sortedVertices
-    private boolean running = false;
 
     public SumColoringAlgorithm(AlgoManager algoManager, Graph graph, int sleepDuration) {
         this.algoManager = algoManager;
@@ -36,12 +35,12 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
     }
 
     @Override public void run() {
-        running = true;
+        algoManager.setState(EngineState.RUNNING_ALGO);
         sumColoringAlgo();
     }
 
     @Override public boolean stop() {
-        running = false;
+        algoManager.revertEngineState();
         if(coloringThread != null && coloringThread.isAlive()) {
             coloringThread.interrupt();
         }
@@ -93,11 +92,17 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
 
     private void sumColoringAlgo() {
         resetAlgoData();
-        algoManager.setState(EngineState.RUNNING_ALGO);
         coloringThread = new Thread(() ->  {
             color(0, 0);
             SwingUtilities.invokeLater(() -> {
-                System.out.println("SumColoringAlgo finished");
+                if(algoManager.getEngineState() == EngineState.RUNNING_ALGO) {
+                    System.out.println("------------------------");
+                    System.out.println("SumColoringAlgo finished");
+                    System.out.println("-> Showcasing Best Colorings");
+                    System.out.println("------------------------");
+                }
+                    
+                    
                 coloringManager.setNextBestColoring();
                 algoManager.revertEngineState();
             });
@@ -108,7 +113,8 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
     @SuppressWarnings("")
     private void color(int i, int currentSum) {
 
-        if(!running || Thread.currentThread().isInterrupted()) {
+        if(algoManager.getEngineState() != EngineState.RUNNING_ALGO  || Thread.currentThread().isInterrupted()) {
+            System.out.println("Algo interrupted");
             return;
         }
 

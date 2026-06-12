@@ -53,7 +53,7 @@ public class AddEdgeHandler implements InteractionHandler {
                 Vertex a = graph.getVertexByLocation(xPressed, yPressed);
                 Vertex b = graph.getVertexByLocation(xReleased, yReleased);
                 engine.registerObject(graph.newEdge(a, b));
-
+                
             } catch (IllegalArgumentException e) {
                 System.out.println("Error: Edge not allowed");
             }

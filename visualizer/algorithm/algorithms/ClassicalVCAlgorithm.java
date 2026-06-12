@@ -24,7 +24,6 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
 
     private int sleepDuration;
     private int n; //Size of sortedVertices
-    private boolean running = false;
 
     private int bestMaxColor;
 
@@ -37,12 +36,12 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
     }
 
     @Override public void run() {
-        running = true;
+        algoManager.setState(EngineState.RUNNING_ALGO);
         classicalVCAlgo();
     }
 
     @Override public boolean stop() {
-        running = false;
+        algoManager.revertEngineState();
         if(coloringThread != null && coloringThread.isAlive()) {
             coloringThread.interrupt();
         }
@@ -93,12 +92,16 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
 
     private void classicalVCAlgo() {
         resetAlgoData();
-        algoManager.setState(EngineState.RUNNING_ALGO);
         coloringThread = new Thread(() ->  {
             greedyColor();
             color(0);
             SwingUtilities.invokeLater(() -> {
-                System.out.println("ClassicalVertexColoringAlgorithm finished with " + coloringManager.getBestColorings().size() + " colorings found");
+                if(algoManager.getEngineState() == EngineState.RUNNING_ALGO) {
+                    System.out.println("------------------------");
+                    System.out.println("ClassicalVertexColoringAlgorithm finished");
+                    System.out.println("-> Showcasing Best Colorings");
+                    System.out.println("------------------------");
+                }
                 coloringManager.setNextBestColoring();
                 algoManager.revertEngineState();
             });
@@ -109,7 +112,8 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
     @SuppressWarnings("")
     private void color(int i) {
 
-        if(!running || Thread.currentThread().isInterrupted()) {
+        if(algoManager.getEngineState() != EngineState.RUNNING_ALGO || Thread.currentThread().isInterrupted()) {
+            System.out.println("Algo interrupted");
             return;
         }
 
@@ -149,7 +153,7 @@ public class ClassicalVCAlgorithm implements ColoringAlgorithm {
     }
 
     private void greedyColor() {
-        if(!running || Thread.currentThread().isInterrupted()) {
+        if(algoManager.getEngineState() != EngineState.RUNNING_ALGO || Thread.currentThread().isInterrupted()) {
             return;
         }
 

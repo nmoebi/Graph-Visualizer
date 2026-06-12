@@ -18,7 +18,7 @@ public class ColoringManager {
         if(!bestColorings.isEmpty()) {
             int index = bestColoringsCounter % bestColorings.size();
             Coloring bestColoring = bestColorings.get(index);
-            System.out.println("Setting best coloring #" + (index+1) + "/" + bestColorings.size() + " with sum = " + bestColoring.getCurrentSum());
+            System.out.println(bestColorings.size() + " colorings found: showing #" + (index+1) + "/" + bestColorings.size() + ", " + bestColoring.getMaxColor() + " colors used, sum = " + bestColoring.getCurrentSum());
             colorGraph(bestColoring);
             bestColoringsCounter++;
         }

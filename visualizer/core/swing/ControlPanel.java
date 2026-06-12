@@ -102,16 +102,24 @@ public class ControlPanel extends JPanel implements ActionListener, Colors {
 
     private void classicalVCButton() {
         classicalVCButton = new JButton("Classical Vertex Coloring");
+        classicalVCButton.setToolTipText("Classical Vertex Coloring searches for a legal coloring for Graph G with a minimal amount of colors used (the Chromatic Number)");
         classicalVCButton.addActionListener(e -> {
-            engine.runAlgorithm(Algorithm.CLASSICAL_VC);
+            if(engine.getEngineState() == EngineState.RUNNING_ALGO) 
+                engine.revertEngineState();
+            else 
+                engine.runAlgorithm(Algorithm.CLASSICAL_VC);
         });
         this.add(classicalVCButton);
     }
 
     private void sumColoringButton() {
         sumColoringButton = new JButton("Sum Coloring");
+        sumColoringButton.setToolTipText("Sum Coloring searches for a legal coloring for Graph G with a minimal sum of colors (the Chromatic Sum)");
         sumColoringButton.addActionListener(e -> {
-            engine.runAlgorithm(Algorithm.SUM_COLORING);
+            if(engine.getEngineState() == EngineState.RUNNING_ALGO) 
+                engine.revertEngineState();
+            else
+                engine.runAlgorithm(Algorithm.SUM_COLORING);
         });
         this.add(sumColoringButton);
     }

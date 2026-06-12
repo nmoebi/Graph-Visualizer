@@ -51,7 +51,6 @@ public class MoveVertexHandler implements InteractionHandler {
                 int newX = v.getXPosition() + diffX;
                 int newY = v.getYPosition() + diffY;
 
-                if(newX > 0 && newX < config.getWidth() && newY > 0 && newY < config.getHeight())
                 v.setPosition(newX, newY);
             }
             
@@ -76,14 +75,15 @@ public class MoveVertexHandler implements InteractionHandler {
 
                 int newX = (int) (Math.round((double) (v.getXPosition() + diffX) / gridSize) * gridSize);
                 int newY = (int) (Math.round((double) (v.getYPosition() + diffY) / gridSize) * gridSize);
-                if(newX > 0 && newX < config.getWidth() && newY > 0 && newY < config.getHeight())
-                    v.setPosition(newX, newY);
+                
+                v.setPosition(newX, newY);
             }  
             moveAllVertices = false;
         }
         else if(vertexGrabbed) {
             x = (int) (Math.round((double) x / gridSize) * gridSize);
             y = (int) (Math.round((double) y / gridSize) * gridSize);
+
             vertex.setPosition(x, y);
             vertexGrabbed = false;
         }
