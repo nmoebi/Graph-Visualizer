@@ -1,83 +1,34 @@
 package visualizer.algorithm.algorithms;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import javax.swing.SwingUtilities;
 import visualizer.algorithm.AlgoManager;
 import visualizer.algorithm.ColoringAlgorithm;
 import visualizer.engine.states.EngineState;
 import visualizer.graph.Graph;
 import visualizer.graph.Vertex;
 import visualizer.graph.coloring.Coloring;
-import visualizer.graph.coloring.ColoringManager;
 
-public class SumColoringAlgorithm implements ColoringAlgorithm {
+public class SumColoringAlgorithm extends ColoringAlgorithm{
     
-    private final Graph graph;
-    private ArrayList<Vertex> sortedVertices;
-    private HashMap<Vertex, HashSet<Vertex>> neighbors;
-
-    private final ColoringManager coloringManager;
-    private final AlgoManager algoManager;
-    private Thread coloringThread;
-
-    private int sumOfColorAmounts;
-    private int sleepDuration;
-    private int n; //Size of sortedVertices
+    int sumOfColorAmounts;
 
     public SumColoringAlgorithm(AlgoManager algoManager, Graph graph, int sleepDuration) {
-        this.algoManager = algoManager;
-        this.graph = graph;
-        this.sleepDuration = sleepDuration;
+        super(algoManager, graph, sleepDuration);
+    }
+
+    @Override
+    public void resetAlgoData() {
         
-        coloringManager = graph.getColoringManager();
-    }
+        super.resetAlgoData();
 
-    @Override public void run() {
-        algoManager.setState(EngineState.RUNNING_ALGO);
-        sumColoringAlgo();
-    }
-
-    @Override public boolean stop() {
-        algoManager.revertEngineState();
-        if(coloringThread != null && coloringThread.isAlive()) {
-            coloringThread.interrupt();
-        }
-        return true;
-    }
-
-    private boolean isLegal(Vertex vertex) {
-        if(vertex != null) {
-            for(int color : vertex.getColors()) {
-                for(Vertex neighbor : neighbors.get(vertex)) {
-                    if(neighbor.getColors().contains(color)) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private void resetAlgoData() {
-        sortedVertices = new ArrayList<>(graph.getVertices());
-        sortedVertices.sort((vertex1, vertex2) -> Integer.compare(vertex2.getDegree(), vertex1.getDegree()));
-        n = sortedVertices.size();
-
-        neighbors = graph.getNeighborsMap();
-        
-        coloringManager.clearBestColorings();
-        
         sumOfColorAmounts = 0;
         for(Vertex vertex : sortedVertices) {
-            vertex.setDefaultColors();
             sumOfColorAmounts += vertex.getColorAmount();
         }
     }
 
-    private void acceptColoring(Coloring currentColoring) {
+    @Override
+    public void acceptColoring(Coloring currentColoring) {
         int bestColoringSum =  coloringManager.getBestColoringSum();
         int currentColoringSum = currentColoring.getCurrentSum();
 
@@ -90,24 +41,9 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
         }
     }
 
-    private void sumColoringAlgo() {
-        resetAlgoData();
-        coloringThread = new Thread(() ->  {
-            color(0, 0);
-            SwingUtilities.invokeLater(() -> {
-                if(algoManager.getEngineState() == EngineState.RUNNING_ALGO) {
-                    System.out.println("------------------------");
-                    System.out.println("SumColoringAlgo finished");
-                    System.out.println("-> Showcasing Best Colorings");
-                    System.out.println("------------------------");
-                }
-                    
-                    
-                coloringManager.setNextBestColoring();
-                algoManager.revertEngineState();
-            });
-        });
-        coloringThread.start();
+    @Override
+    public void runAlgo() {
+        color(0, 0);
     }
 
     @SuppressWarnings("")
@@ -155,9 +91,5 @@ public class SumColoringAlgorithm implements ColoringAlgorithm {
         else {
             acceptColoring(coloringManager.getCurrentColoring());
         }        
-    }
-
-    public void setSleepDuration(int sleepDuration) {
-        this.sleepDuration = sleepDuration;
     }
 }

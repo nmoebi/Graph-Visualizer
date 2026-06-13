@@ -1,8 +1,4 @@
-package visualizer.core.logic;
-
-import visualizer.engine.states.EngineState;
-import visualizer.engine.states.StateManager;
-
+package visualizer.engine.states;
 
 public class VisualizerStateManager implements StateManager {
     

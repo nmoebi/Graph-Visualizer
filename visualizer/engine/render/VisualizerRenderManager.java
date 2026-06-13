@@ -1,8 +1,7 @@
-package visualizer.core.logic;
+package visualizer.engine.render;
 
 import java.awt.Graphics2D;
 import java.util.*;
-import visualizer.engine.render.*;
 
 public class VisualizerRenderManager implements RenderManager {
 

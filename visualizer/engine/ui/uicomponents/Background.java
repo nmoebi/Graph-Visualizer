@@ -1,4 +1,4 @@
-package visualizer.uicomponents;
+package visualizer.engine.ui.uicomponents;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;

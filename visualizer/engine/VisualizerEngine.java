@@ -1,17 +1,16 @@
-package visualizer.core.logic;
+package visualizer.engine;
 
 import java.awt.Graphics2D;
 import visualizer.algorithm.AlgoManager;
 import visualizer.algorithm.Algorithm;
-import visualizer.engine.InputManager;
-import visualizer.engine.VisEngine;
 import visualizer.engine.config.Config;
+import visualizer.engine.input.InputManager;
 import visualizer.engine.render.RenderManager;
 import visualizer.engine.render.Renderable;
 import visualizer.engine.states.EngineState;
 import visualizer.engine.states.StateManager;
+import visualizer.engine.ui.uicomponents.Background;
 import visualizer.graph.Graph;
-import visualizer.uicomponents.Background;
 
 public class VisualizerEngine implements VisEngine{
     private final InputManager inputManager;

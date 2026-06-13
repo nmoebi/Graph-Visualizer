@@ -1,4 +1,4 @@
-package visualizer.engine.handlers;
+package visualizer.engine.input.handlers;
 
 import visualizer.engine.VisEngine;
 import visualizer.graph.Graph;

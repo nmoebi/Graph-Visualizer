@@ -3,15 +3,15 @@
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import visualizer.algorithm.AlgoManager;
-import visualizer.core.logic.VisualizerEngine;
-import visualizer.core.logic.VisualizerInputManager;
-import visualizer.core.logic.VisualizerRenderManager;
-import visualizer.core.logic.VisualizerStateManager;
-import visualizer.core.swing.ControlPanel;
-import visualizer.core.swing.VisualizerPanel;
 import visualizer.engine.VisEngine;
+import visualizer.engine.VisualizerEngine;
 import visualizer.engine.config.Config;
+import visualizer.engine.input.VisualizerInputManager;
+import visualizer.engine.render.VisualizerRenderManager;
+import visualizer.engine.states.VisualizerStateManager;
 import visualizer.graph.Graph;
+import visualizer.swing.ControlPanel;
+import visualizer.swing.VisualizerPanel;
 
 public class VisualizerLauncher {
     public static void main(String[] args) {

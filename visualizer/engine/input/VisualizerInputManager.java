@@ -1,13 +1,12 @@
-package visualizer.core.logic;
+package visualizer.engine.input;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import javax.swing.event.MouseInputAdapter;
-import visualizer.engine.InputManager;
 import visualizer.engine.VisEngine;
-import visualizer.engine.handlers.AddEdgeHandler;
-import visualizer.engine.handlers.AddVertexHandler;
-import visualizer.engine.handlers.MoveVertexHandler;
+import visualizer.engine.input.handlers.AddEdgeHandler;
+import visualizer.engine.input.handlers.AddVertexHandler;
+import visualizer.engine.input.handlers.MoveVertexHandler;
 import visualizer.graph.Graph;
 
 public class VisualizerInputManager implements InputManager {

@@ -1,5 +1,6 @@
-package visualizer.engine;
+package visualizer.engine.input;
 
+import visualizer.engine.VisEngine;
 import visualizer.graph.Graph;
 
 public interface InputManager {

@@ -14,7 +14,7 @@ public class AlgoManager {
     private SumColoringAlgorithm sumColoringAlgorithm;
     private int sleepDuration = 10;
 
-    ColoringAlgorithm activeAlgorithm;
+    ColoringAlgo activeAlgorithm;
 
     public void setEngine(VisEngine engine) {
         this.engine = engine;

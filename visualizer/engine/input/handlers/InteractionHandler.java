@@ -1,4 +1,4 @@
-package visualizer.engine.handlers;
+package visualizer.engine.input.handlers;
 
 public interface InteractionHandler {
 
