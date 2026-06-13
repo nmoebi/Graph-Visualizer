@@ -12,7 +12,7 @@ public class AlgoManager {
     private Graph graph;
     private ClassicalVCAlgorithm classicalVCAlgorithm;
     private SumColoringAlgorithm sumColoringAlgorithm;
-    private int sleepDuration = 10;
+    private int sleepDuration = 0;
 
     ColoringAlgo activeAlgorithm;
 
